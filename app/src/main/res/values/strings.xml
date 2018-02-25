@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">FinalTestAndriod</string>
+    <string name="please_sign_in">Pleaes sign in</string>
+    <string name="username">Username:</string>
+    <string name="enter_email_address">Enter Email Address</string>
+    <string name="password">Password:</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="submit">Submit</string>
 </resources>

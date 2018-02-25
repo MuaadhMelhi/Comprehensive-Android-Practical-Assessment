@@ -16,13 +16,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username, password;
     private Button loginButton;
     private SharedPreferences login;
+    public static final String USER_NAME_K = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setUpView();
-        String existUser = login.getString("username", "");
+        String existUser = login.getString(USER_NAME_K, "");
         if (existUser.length() > 0) {
             goIntentToBreedActivity();
         }
@@ -46,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Pleaes Enter your Password", Toast.LENGTH_SHORT).show();
         } else if (userName.length() > 0 && userPassword.length() > 0 && contains == false) {
             SharedPreferences.Editor editor = login.edit();
-            editor.putString("username", username.getText().toString());
+            editor.putString(USER_NAME_K, username.getText().toString());
             editor.commit();
             goIntentToBreedActivity();
         } else {
@@ -55,7 +56,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goIntentToBreedActivity() {
-        startActivity(new Intent(this, BreedsActivity.class));
+        Intent intent = new Intent(LoginActivity.this, BreedsActivity.class);
+        intent.putExtra(getString(R.string.shared_name), SHARED_PREF_KEY);
+        startActivity(intent);
     }
 
     private void setUpView() {

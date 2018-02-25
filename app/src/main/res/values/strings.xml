@@ -6,4 +6,12 @@
     <string name="password">Password:</string>
     <string name="enter_password">Enter Password</string>
     <string name="submit">Submit</string>
+    <string name="welcome_greeting_testing">welcome user</string>
+    <string name="shared_name">shared</string>
+    <string name="greetingQuestion">What Kind Of dog would you like to see,</string>
+    <string name="terrier">Terrier</string>
+    <string name="spaniel">Spaniel</string>
+    <string name="retriever">Retriever</string>
+    <string name="poodle">Poodle</string>
+    <string name="logout">Logout</string>
 </resources>

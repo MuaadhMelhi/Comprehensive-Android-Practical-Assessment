@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 
 class DogViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private ImageView dogImage;
-    private static final String URL = "url";
+    public static final String URL = "url";
     private String url;
 
     public DogViewHolder(View itemView) {

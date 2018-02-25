@@ -2,6 +2,7 @@ package nyc.muaadh_melhi_develpoer.finaltestandriod;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,19 +28,20 @@ public class DogsActivity extends AppCompatActivity {
     private DogAdapter dogAdapter;
     private List<String> dogImageList = new ArrayList<>();
     private SharedPreferences loginSharedPref;
+    private Intent intent;
+    private TextView breedText;
+    private String breedName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dogs);
-        TextView breedText = findViewById(R.id.dog_breed_text);
-        recyclerView = findViewById(R.id.dog_ac_re);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        Intent intent = getIntent();
-        String breedName = intent.getStringExtra(BreedsActivity.BREED_NAME);
-        loginSharedPref = getApplicationContext().getSharedPreferences(intent.getStringExtra("shared"), MODE_PRIVATE);
-        breedText.setText(breedName);
-        breedService = Common.getBreed();
+        setUp();
+        checkOrientation();
+        breedNetworkingCall();
+    }
+
+    private void breedNetworkingCall() {
         breedService.getBreedImages(breedName).enqueue(new Callback<BreedImages>() {
             @Override
             public void onResponse(Call<BreedImages> call, Response<BreedImages> response) {
@@ -53,7 +55,24 @@ public class DogsActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
 
+    private void setUp() {
+        breedText = findViewById(R.id.dog_breed_text);
+        recyclerView = findViewById(R.id.dog_ac_re);
+        intent = getIntent();
+        breedService = Common.getBreed();
+        breedName = intent.getStringExtra(BreedsActivity.BREED_NAME);
+        loginSharedPref = getApplicationContext().getSharedPreferences(intent.getStringExtra("shared"), MODE_PRIVATE);
+        breedText.setText(breedName);
+    }
+
+    private void checkOrientation() {
+        if (DogsActivity.this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        }
     }
 
     @Override
@@ -67,10 +86,7 @@ public class DogsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.logout:
-                SharedPreferences.Editor editor = loginSharedPref.edit();
-                String user = loginSharedPref.getString(LoginActivity.USER_NAME_K, "");
-                editor.remove(user).commit();
-                //loginSharedPref.edit().remove(LoginActivity.USER_NAME_K).commit();
+                loginSharedPref.edit().clear().apply();
                 startActivity(new Intent(DogsActivity.this, LoginActivity.class));
                 return true;
             default:

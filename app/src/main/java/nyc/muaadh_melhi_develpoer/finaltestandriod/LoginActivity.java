@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -12,19 +13,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String SHARED_PREF_KEY = "sharedPrefsTesting";
+    private static String SHARED_PREF_KEY = "sharedPrefsTesting";
     private EditText username, password;
     private Button loginButton;
     private SharedPreferences login;
-    public static final String USER_NAME_K = "username";
+    // public static String USER_NAME_K = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setUpView();
-        String existUser = login.getString(USER_NAME_K, "");
-        if (existUser.length() > 0) {
+
+        String existUser = login.getString("username", "");
+        if (existUser != null) {
             goIntentToBreedActivity();
         }
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Pleaes Enter your Password", Toast.LENGTH_SHORT).show();
         } else if (userName.length() > 0 && userPassword.length() > 0 && contains == false) {
             SharedPreferences.Editor editor = login.edit();
-            editor.putString(USER_NAME_K, username.getText().toString());
+            editor.putString("username", username.getText().toString());
             editor.commit();
             goIntentToBreedActivity();
         } else {

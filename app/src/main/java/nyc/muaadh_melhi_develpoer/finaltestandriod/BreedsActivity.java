@@ -47,10 +47,10 @@ public class BreedsActivity extends AppCompatActivity implements View.OnClickLis
     private void greetingUser() {
         Intent intent = getIntent();
         loginSharedPref = getApplicationContext().getSharedPreferences(intent.getStringExtra("shared"), MODE_PRIVATE);
-        String userName = loginSharedPref.getString(LoginActivity.USER_NAME_K, "");
+        String userName = loginSharedPref.getString("username", "");
         if (userName.length() > 0) {
             StringBuilder s = new StringBuilder(getString(R.string.greetingQuestion));
-            s.append(userName + " ?");
+            s.append(userName).append(" ?");
             greetingText.setText(s);
         } else {
             startActivity(new Intent(BreedsActivity.this, LoginActivity.class));
@@ -139,7 +139,7 @@ public class BreedsActivity extends AppCompatActivity implements View.OnClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.logout:
-                loginSharedPref.edit().remove(LoginActivity.USER_NAME_K).commit();
+                loginSharedPref.edit().clear().apply();
                 finish();
                 return true;
             default:

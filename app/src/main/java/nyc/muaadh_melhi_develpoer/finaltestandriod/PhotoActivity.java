@@ -19,6 +19,10 @@ public class PhotoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
+        setUp();
+    }
+
+    private void setUp() {
         ImageView imageView = findViewById(R.id.photo_url);
         Intent intent = getIntent();
         String url = intent.getStringExtra(DogViewHolder.URL);
@@ -37,10 +41,7 @@ public class PhotoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.logout:
-                SharedPreferences.Editor editor = loginSharedPref.edit();
-                String user = loginSharedPref.getString(LoginActivity.USER_NAME_K, "");
-                editor.remove(user).commit();
-                //loginSharedPref.edit().remove(LoginActivity.USER_NAME_K).commit();
+                loginSharedPref.edit().clear().apply();
                 startActivity(new Intent(PhotoActivity.this, LoginActivity.class));
                 return true;
             default:

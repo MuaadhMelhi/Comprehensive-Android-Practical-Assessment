@@ -3,4 +3,5 @@
     <dimen name="login_layout_h">0dp</dimen>
     <dimen name="login_layout_mE">60dp</dimen>
     <dimen name="login_layout_mS">60dp</dimen>
+    <dimen name="welcome_text_size">18sp</dimen>
 </resources>

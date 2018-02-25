@@ -139,7 +139,7 @@ public class BreedsActivity extends AppCompatActivity implements View.OnClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.logout:
-                loginSharedPref.edit().remove(LoginActivity.USER_NAME_K);
+                loginSharedPref.edit().remove(LoginActivity.USER_NAME_K).commit();
                 finish();
                 return true;
             default:

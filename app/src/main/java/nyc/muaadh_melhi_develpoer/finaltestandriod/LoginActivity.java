@@ -17,7 +17,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username, password;
     private Button loginButton;
     private SharedPreferences login;
-    // public static String USER_NAME_K = "username";
+     public static String USER_NAME_K = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         setUpView();
 
         String existUser = login.getString("username", "");
-        if (existUser != null) {
+        if (existUser.length()>0) {
             goIntentToBreedActivity();
         }
         loginButton.setOnClickListener(new View.OnClickListener() {
